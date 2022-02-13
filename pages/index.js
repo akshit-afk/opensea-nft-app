@@ -59,7 +59,7 @@ export default function Home() {
           </button>
           <div className={style.details}>
             You need to connect your
-            <br /> wallet to view your balance.
+            <br /> wallet to use opensea.
           </div>
         </div>
       )}
