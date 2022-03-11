@@ -1,4 +1,5 @@
 import React from 'react'
+import Router from 'next/router'
 const style = {
   wrapper: `relative`,
   container: `before:content-[''] before:bg-red-500 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('https://lh3.googleusercontent.com/ujepnqpnL0nDQIHsWxlCXzyw4pf01yjz1Jmb4kAQHumJAPrSEj0-e3ABMZlZ1HEpJoqwOcY_kgnuJGzfXbd2Tijri66GXUtfN2MXQA=s250')] before:bg-cover before:bg-center before:opacity-30 before:blur`,
@@ -9,7 +10,7 @@ const style = {
   ctaContainer: `flex`,
   accentedButton: `relative text-lg font-semibold px-12 py-4 bg-[#2181e2] rounded-lg mr-5 text-white hover:bg-[#42a0ff] cursor-pointer`,
   button: `relative text-lg font-semibold px-12 py-4 bg-[#363840] rounded-lg mr-5 text-[#e4e8ea] hover:bg-[#4c505c] cursor-pointer`,
-  cardContainer: `rounded-[3rem]`,
+  cardContainer: `rounded-[3rem] `,
   infoContainer: `h-20 bg-[#313338] p-4 rounded-b-lg flex items-[center] text-white`,
   author: `flex flex-col justify-center ml-4`,
   name: ``,
@@ -28,13 +29,22 @@ const Hero = () => {
               OpenSea is the world&apos;s first and largest NFT marketplace
             </div>
             <div className={style.ctaContainer}>
-              <button className={style.accentedButton}>Explore</button>
+              <button
+                className={style.accentedButton}
+                onClick={() => {
+                  Router.push({
+                    pathname: `/collections/0x7a059fd012Ba5208F65f699B52ECC56d2e02496E`,
+                  })
+                }}
+              >
+                Explore
+              </button>
               <button className={style.button}>Create</button>
             </div>
           </div>
           <div className={style.cardContainer}>
             <img
-              className="rounded-t-lg"
+              className=" h-[25rem] rounded-t-lg"
               src="https://lh3.googleusercontent.com/ujepnqpnL0nDQIHsWxlCXzyw4pf01yjz1Jmb4kAQHumJAPrSEj0-e3ABMZlZ1HEpJoqwOcY_kgnuJGzfXbd2Tijri66GXUtfN2MXQA=s550"
               alt="OpenSea"
             />
@@ -45,12 +55,12 @@ const Hero = () => {
                 alt=""
               />
               <div className={style.author}>
-                <div className={style.name}>Dopamine</div>
+                <div className={style.name}>Jolly</div>
                 <a
                   className="text-[#1868b2]"
                   href="https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/2324922113504035910649522729980423429926362207300810036887725141691069366277"
                 >
-                  ATHENA
+                  hola canola
                 </a>
               </div>
             </div>

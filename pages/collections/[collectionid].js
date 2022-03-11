@@ -11,13 +11,13 @@ import { HiDotsVertical } from 'react-icons/hi'
 import NFTCard from '../../components/NFTCard'
 
 const style = {
-  bannerImageContainer: `h-[20vh] w-screen overflow-hidden flex justify-center items-center`,
+  bannerImageContainer: `h-[22vh] w-screen overflow-hidden flex justify-center items-center`,
   bannerImage: `w-full object-cover`,
   infoContainer: `w-screen px-4`,
   midRow: `w-full flex justify-center text-white`,
   endRow: `w-full flex justify-end text-white`,
   profileImg: `w-40 h-40 object-cover rounded-full border-2 border-[#202225] mt-[-4rem]`,
-  socialIconsContainer: `flex text-3xl mb-[-2rem]`,
+  socialIconsContainer: `flex text-3xl mb-[-3.5rem] mr-[2rem]`,
   socialIconsWrapper: `w-44`,
   socialIconsContent: `flex container justify-between text-[1.4rem] border-2 rounded-lg px-2`,
   socialIcon: `my-2`,
@@ -26,9 +26,9 @@ const style = {
   createdBy: `text-lg mb-4`,
   statsContainer: `w-[44vw] flex justify-between py-4 border border-[#151b22] rounded-xl mb-4`,
   collectionStat: `w-1/4`,
-  statVale: `text-3xl font-bold w-full flex items-center justify-center`,
-  ethLogo: `h-6 mr-2`,
-  statName: `text-lg w-full text-center mt-1`,
+  statVale: `text-[1.5rem] font-bold w-full flex items-center justify-center`,
+  ethLogo: `h-6 mr-1`,
+  statName: `text-lg w-full ml-2 text-center mt-1 `,
   description: `text-[#8a939b] text-xl w-max-1/4 flex-wrap mt-4`,
 }
 const Collection = () => {
@@ -43,40 +43,37 @@ const Collection = () => {
   const nftModule = useMemo(() => {
     if (!provider) return
 
-    const sdk = new ThirdwebSDK(
-      provider.getSigner(),
-      'https://eth-rinkeby.alchemyapi.io/v2/Q7n7SO7PDmB_ldI-V8dLrCUjgGWtq6Ox'
-    )
+    const sdk = new ThirdwebSDK(provider.getSigner())
     return sdk.getNFTModule(collectionid)
   }, [provider])
-  //get the nft module inside the collection
+
+  // get all NFTs in the collection
   useEffect(() => {
     if (!nftModule) return
     ;(async () => {
       const nfts = await nftModule.getAll()
+
       setNfts(nfts)
     })()
   }, [nftModule])
 
-  const marketplaceModule = useMemo(() => {
+  const marketPlaceModule = useMemo(() => {
     if (!provider) return
-    const sdk = new ThirdwebSDK(
-      provider.getSigner(),
-      'https://eth-rinkeby.alchemyapi.io/v2/Q7n7SO7PDmB_ldI-V8dLrCUjgGWtq6Ox'
-    )
+
+    const sdk = new ThirdwebSDK(provider.getSigner())
     return sdk.getMarketplaceModule(
       '0x85B1DbF700E3a51A0b532E8C0ea1eA370A0ef5a5'
     )
-  }, [provider])
+  }, [provider, collectionid])
 
-  //get all listings in the marketplace
-
+  // get all listings in the collection
   useEffect(() => {
-    if (!marketplaceModule) return
+    if (!marketPlaceModule) return
     ;(async () => {
-      setListings(await marketplaceModule.getAllListings())
+      setListings(await marketPlaceModule.getAllListings())
     })()
-  }, [marketplaceModule])
+  }, [marketPlaceModule])
+  console.log(marketPlaceModule, '3')
 
   const fetchCollectionData = async (
     sanityClient = client,
@@ -168,12 +165,7 @@ const Collection = () => {
               <div className={style.statVale}>{nfts.length} </div>
               <div className={style.statName}>Items</div>
             </div>
-            <div className={style.collectionStat}>
-              <div className={style.statVale}>
-                {collection?.allOwners ? collection.allOwners.length : ''}
-              </div>
-              <div className={style.statName}>Owners</div>
-            </div>
+
             <div className={style.collectionStat}>
               <div className={style.statVale}>
                 <img
@@ -184,6 +176,12 @@ const Collection = () => {
                 {collection?.floorPrice}
               </div>
               <div className={style.statName}>Floor price</div>
+            </div>
+            <div className={style.collectionStat}>
+              <div className={style.statVale}>
+                {collection?.allOwners ? collection.allOwners.length : ''}
+              </div>
+              <div className={style.statName}>Owners</div>
             </div>
             <div className={style.collectionStat}>
               <div className={style.statVale}>
